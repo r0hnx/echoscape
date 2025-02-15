@@ -1,0 +1,38 @@
+{
+  "name": "background-music-mixer",
+  "version": "1.0.0",
+  "description": "A minimalist background music mixer app with customizable sounds and themes.",
+  "main": "index.js",
+  "scripts": {
+    "start": "next dev",
+    "build": "next build",
+    "lint": "next lint",
+    "export": "next export",
+    "serve": "next start"
+  },
+  "dependencies": {
+    "@next/font": "13.0.3",
+    "@tailwindcss/forms": "^0.5.3",
+    "framer-motion": "^12.4.2",
+    "howler": "^2.2.3",
+    "next": "13.0.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.12",
+    "eslint": "^8.26.0",
+    "eslint-config-next": "^13.0.3",
+    "postcss": "^8.4.18",
+    "tailwindcss": "^3.2.4"
+  },
+  "keywords": [
+    "background-music",
+    "music-mixer",
+    "react",
+    "howler",
+    "tailwind"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}
