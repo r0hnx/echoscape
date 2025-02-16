@@ -35,10 +35,10 @@ const getRandomSessionName = () => {
 };
 
 const backgrounds = [
-  { name: "Matte Black", className: "bg-black" },
+  { name: "Dark Mode", className: "bg-black" },
   { name: "Cozy Room", className: "bg-[url('/images/cozy.jpg')] bg-cover" },
   { name: "Anime Sunset", className: "bg-[url('/images/anime-sunset.jpg')] bg-cover" },
-  { name: "Moving Lava Lamp", className: "lava-lamp", animated: true },
+  { name: "Lava Lamp", animated: true },
 ];
 
 const quotes = [
@@ -58,6 +58,7 @@ export default function AmbienceApp() {
   const [activeTab, setActiveTab] = useState("Ambience");
   const [sessions, setSessions] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [sessionName, setSessionName] = useState(getRandomSessionName());
   const [time, setTime] = useState(25 * 60);
   const [mode, setMode] = useState("focus");
@@ -214,26 +215,51 @@ export default function AmbienceApp() {
 
   return (
     <div
-      className={`w-full ${background.className} flex flex-col items-center justify-center bg-fixed bg-no-repeat bg-cover transition-none  ease-in-out duration-700`}
+      className={`w-full min-h-svh ${background.className} flex flex-col items-center justify-center bg-fixed bg-no-repeat bg-cover transition-none  ease-in-out duration-700`}
     >
-      {background.animated && <><div className="lava-lamp-2" /><div className="lava-lamp-3" /></>}
-      <nav className="flex w-full justify-center justify-items-center gap-6 py-8 px-10 bg-transparent text-white fixed top-0 backdrop-blur-md z-50">
-        <div className=" text-4xl"><b>Echo</b>Scape</div>
-        <div className="w-full"></div>
-        {["Ambience", "Pomodoro"].map((tab) => (
-          <button
-            key={tab}
-            className={`p-2 text-lg rounded-lg transition ${activeTab === tab ? "font-bold" : "font-normal"}`}
-            onClick={() => setActiveTab(tab)}
-          >
-            {tab}
-          </button>
-        ))}
-        <button onClick={() => setModalOpen(true)} className="text-white p-2 text-lg rounded-lg z-30">💾</button>
+      {background.animated && <>
+        <div className="lava-lamp" />
+        <div className="lava-lamp-2" />
+        <div className="lava-lamp-3" />
+        <div className="lava-lamp-4" />
+      </>}
+      <nav className="flex w-full justify-between items-center sm:px-10 py-4 px-6 bg-transparent text-white backdrop-blur-md z-50">
+        <div className="text-3xl sm:text-4xl"><b>Echo</b>Scape</div>
+        <div className="hidden md:flex gap-6">
+          {["Ambience", "Pomodoro"].map((tab) => (
+            <button
+              key={tab}
+              className={`p-2 text-lg rounded-lg transition ${activeTab === tab ? "font-bold" : "font-normal"}`}
+              onClick={() => setActiveTab(tab)}
+            >
+              {tab}
+            </button>
+          ))}
+          <button onClick={() => setModalOpen(true)} className="text-white p-2 text-lg rounded-lg z-30">💾</button>
+        </div>
+        <button className="md:hidden text-white text-2xl" onClick={() => setMenuOpen(true)}>☰</button>
       </nav>
 
+      {/* Overlay when menu is open */}
+      {menuOpen && (
+        <div className="flex flex-col z-50">
+          <div className="fixed justify-start backdrop-blur-md inset-0 bg-black bg-opacity-50 p-20" onClick={() => setMenuOpen(false)}>
+            {["Ambience", "Pomodoro"].map((tab) => (
+              <button
+                key={tab}
+                className={`p-2 text-3xl rounded-lg transition ${activeTab === tab ? "font-bold" : "font-normal"}`}
+                onClick={() => setActiveTab(tab)}
+              >
+                {tab}
+              </button>
+            ))}
+            <button onClick={() => setModalOpen(true)} className="text-white p-2 text-3xl rounded-lg">Sessions</button>
+          </div>
+        </div>
+      )}
+
       {activeTab === "Ambience" && (
-        <div className="h-full w-full bg-opacity-80 flex flex-col items-center text-white mt-32 px-6 md:px-12 py-4 md:py-12 z-10">
+        <div className="h-full w-full bg-opacity-80 flex flex-col items-center text-white mt-12 px-6 md:px-12 py-4 md:py-12 z-10">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 md:mb-8 tracking-wide text-center">
             Create Your Perfect Ambience
           </h1>
@@ -244,7 +270,7 @@ export default function AmbienceApp() {
             {backgrounds.map((bg) => (
               <button
                 key={bg.name}
-                className={`px-4 py-2 ${backgrounds.indexOf(bg) == 0 ? "rounded-l-lg" : backgrounds.indexOf(bg) == backgrounds.length - 1 ? "rounded-r-lg" : "rounded-none"} shadow-xl font-medium ${background.name === bg.name
+                className={`px-2 py-1 md:px-4 md:py-2 text-xs md:text-base ${backgrounds.indexOf(bg) == 0 ? "rounded-l-lg" : backgrounds.indexOf(bg) == backgrounds.length - 1 ? "rounded-r-lg" : "rounded-none"} shadow-xl font-medium ${background.name === bg.name
                   ? "bg-blue-600 text-white"
                   : "bg-gray-800 text-gray-300"
                   }`}
@@ -291,14 +317,14 @@ export default function AmbienceApp() {
       )}
 
       {activeTab === "Pomodoro" && (
-        <div className={`h-screen w-full bg-opacity-60 bg-slate-800 flex flex-col items-center text-white px-6 md:px-12 pb-4 md:pb-12 ${mode ? mode + "-waves" : ""} transition-all justify-center duration-700 ease-in-out z-10`}>
-          <div className="text-[10rem] mb-5 font-bold">{Math.floor(time / 60) < 10 ? `0${Math.floor(time / 60)}` : Math.floor(time / 60)}:{(time % 60).toString().padStart(2, "0")}</div>
+        <div className={`h-screen pb-28 overscroll-none w-full flex flex-col items-center text-white px-6 md:px-12 ${mode ? mode + "-waves" : ""} transition-all justify-center duration-700 ease-in-out z-10`}>
+          <div className="text-9xl lg:text-[10rem] mb-4 font-bold">{Math.floor(time / 60) < 10 ? `0${Math.floor(time / 60)}` : Math.floor(time / 60)}:{(time % 60).toString().padStart(2, "0")}</div>
           <div className="mt-4 flex p-2 rounded-lg">
-            <Button className="bg-slate-200 bg-opacity-20 backdrop-blur-md text-slate-200 text-sm border-transparent border-4 border-opacity-20 px-4 py-2 rounded-l-lg rounded-r-none" onClick={() => startTimer(25, "focus")}>Focus</Button>
-            <Button className="bg-slate-200 bg-opacity-20 backdrop-blur-md text-slate-200 text-sm border-transparent border-4 border-opacity-20 px-4 py-2 rounded-none" onClick={() => startTimer(5, "short-break")}>Short Break</Button>
-            <Button className="bg-slate-200 bg-opacity-20 backdrop-blur-md text-slate-200 text-sm border-transparent border-4 border-opacity-20 px-4 py-2 rounded-none" onClick={() => startTimer(15, "long-break")}>Long Break</Button>
-            <Button className="bg-slate-200 bg-opacity-20 backdrop-blur-md text-slate-200 text-sm border-transparent border-4 border-opacity-20 px-4 py-2 rounded-none" onClick={() => { setIsRunning(false); setTime(25 * 60); setMode(null); }}>Reset</Button>
-            <Button className="bg-slate-200 bg-opacity-20 backdrop-blur-md text-slate-200 text-sm border-transparent border-4 border-opacity-20 px-4 py-2 rounded-l-none rounded-r-lg" onClick={() => setIsRunning(!isRunning)}>{isRunning ? "Pause" : "Start"}</Button>
+            <Button className="bg-slate-200 text-xs md:text-sm bg-opacity-20 backdrop-blur-md text-slate-200 border-transparent border-4 border-opacity-20 px-2 py-1 md:px-4 md:py-2 rounded-l-lg rounded-r-none" onClick={() => startTimer(25, "focus")}>Focus</Button>
+            <Button className="bg-slate-200 text-xs md:text-sm bg-opacity-20 backdrop-blur-md text-slate-200 border-transparent border-4 border-opacity-20 px-2 py-1 md:px-4 md:py-2 rounded-none" onClick={() => startTimer(5, "short-break")}>Short Break</Button>
+            <Button className="bg-slate-200 text-xs md:text-sm bg-opacity-20 backdrop-blur-md text-slate-200 border-transparent border-4 border-opacity-20 px-2 py-1 md:px-4 md:py-2 rounded-none" onClick={() => startTimer(15, "long-break")}>Long Break</Button>
+            <Button className="bg-slate-200 text-xs md:text-sm bg-opacity-20 backdrop-blur-md text-slate-200 border-transparent border-4 border-opacity-20 px-2 py-1 md:px-4 md:py-2 rounded-none" onClick={() => { setIsRunning(false); setTime(25 * 60); setMode(null); }}>Reset</Button>
+            <Button className={`bg-slate-200 text-xs md:text-sm bg-opacity-20 backdrop-blur-md text-slate-200 border-transparent border-4 border-opacity-20 px-2 py-1 md:px-4 md:py-2 rounded-l-none rounded-r-lg`} onClick={() => setIsRunning(!isRunning)}>{isRunning ? "Pause" : "Start"}</Button>
           </div>
 
         </div>

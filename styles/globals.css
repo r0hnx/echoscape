@@ -6,9 +6,6 @@ body {
   @apply min-h-screen bg-gray-900 text-white;
 }
 
-html {
-  min-width: 640px;
-}
 ::-webkit-scrollbar {
   display: none;
 }
@@ -59,111 +56,112 @@ html {
 
 @keyframes moveWaves {
   0% {
-    transform: translateX(-120%) translateY(-80%) scale(1);
+    transform: translateX(-20vw) translateY(-20vh) scale(1);
     opacity: 0.75;
   }
   15% {
-    transform: translateX(60%) translateY(-60%) scale(1.05);
+    transform: translateX(15vw) translateY(-10vh) scale(1.05);
     opacity: 0.7;
   }
   30% {
-    transform: translateX(-40%) translateY(70%) scale(1.15);
+    transform: translateX(-10vw) translateY(18vh) scale(1.15);
     opacity: 0.65;
   }
   45% {
-    transform: translateX(80%) translateY(-30%) scale(1.1);
+    transform: translateX(30vw) translateY(-5vh) scale(1.1);
     opacity: 0.6;
   }
   60% {
-    transform: translateX(-100%) translateY(50%) scale(1.2);
+    transform: translateX(-25vw) translateY(12vh) scale(1.2);
     opacity: 0.55;
   }
   75% {
-    transform: translateX(50%) translateY(-70%) scale(1.1);
+    transform: translateX(12vw) translateY(-18vh) scale(1.1);
     opacity: 0.6;
   }
   90% {
-    transform: translateX(-60%) translateY(40%) scale(1.05);
+    transform: translateX(-15vw) translateY(10vh) scale(1.05);
     opacity: 0.7;
   }
   100% {
-    transform: translateX(-120%) translateY(-80%) scale(1);
+    transform: translateX(-20vw) translateY(-20vh) scale(1);
     opacity: 0.75;
   }
 }
 
-@keyframes moveWaves2 {
+
+@keyframes moveWavesInverse {
   0% {
-    transform: translateX(-12%) translateY(-8%) scale(1);
+    transform: translateX(20vw) translateY(20vh) scale(1);
     opacity: 0.75;
   }
   15% {
-    transform: translateX(6%) translateY(-6%) scale(1.05);
+    transform: translateX(-15vw) translateY(10vh) scale(1.05);
     opacity: 0.7;
   }
   30% {
-    transform: translateX(-4%) translateY(7%) scale(1.15);
+    transform: translateX(10vw) translateY(-18vh) scale(1.15);
     opacity: 0.65;
   }
   45% {
-    transform: translateX(8%) translateY(-3%) scale(1.1);
+    transform: translateX(-30vw) translateY(5vh) scale(1.1);
     opacity: 0.6;
   }
   60% {
-    transform: translateX(-10%) translateY(5%) scale(1.2);
+    transform: translateX(25vw) translateY(-12vh) scale(1.2);
     opacity: 0.55;
   }
   75% {
-    transform: translateX(5%) translateY(-7%) scale(1.1);
+    transform: translateX(-12vw) translateY(18vh) scale(1.1);
     opacity: 0.6;
   }
   90% {
-    transform: translateX(-6%) translateY(4%) scale(1.05);
+    transform: translateX(15vw) translateY(-10vh) scale(1.05);
     opacity: 0.7;
   }
   100% {
-    transform: translateX(-12%) translateY(-8%) scale(1);
+    transform: translateX(20vw) translateY(20vh) scale(1);
     opacity: 0.75;
   }
 }
 
-.lava-lamp, .lava-lamp-2, .lava-lamp-3 {
-  position: absolute;
+
+
+.lava-lamp,.lava-lamp-2 ,.lava-lamp-3, .lava-lamp-4 {
+  position: fixed;
   top: 0;
   left: 0;
-  z-index: 0;
+  z-index: -10;
+  width: 660px;
+  height: 660px;
+  aspect-ratio: 1 / 1; /* Prevent distortion */
+  border-radius: 50%;
+  overflow: hidden;
 }
 
-.lava-lamp::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 80%;
-  background: radial-gradient(circle, violet, orange, magenta, red 60%);
+.lava-lamp {
+  background: radial-gradient(circle, orange, magenta, indianred 60%);
   filter: blur(100px);
-  animation: moveWaves 60s infinite alternate ease-in-out;
+  animation: moveWaves 60s infinite reverse ease-in-out;
 }
 
 .lava-lamp-2 {
-  content: "";
-  position: absolute;
-  width: 80%;
-  height: 80%;
-  border-radius: 80%;
-  background: radial-gradient(circle, orange, magenta, indianred 60%);
+  animation-delay: 3s;
+  background: radial-gradient(circle, gold, coral, crimson, midnightblue 60%);
   filter: blur(100px);
-  animation: moveWaves2 20s infinite alternate ease-in-out;
+  animation: moveWavesInverse 30s infinite alternate ease-in-out;
 }
 
 .lava-lamp-3 {
-  content: "";
-  position: absolute;
-  width: 80%;
-  height: 80%;
-  border-radius: 80%;
   animation-delay: 3s;
-  background: radial-gradient(circle, orange, magenta, indianred, violet 60%);
+  background: radial-gradient(circle, cyan, royalblue, purple, black 60%);
   filter: blur(100px);
-  animation: moveWaves2 10s infinite alternate ease-in-out;
+  animation: moveWaves 15s infinite alternate ease-in-out;
+}
+
+.lava-lamp-4 {
+  animation-delay: 3s;
+  background: radial-gradient(circle, limegreen, teal, darkslateblue, black 60%);
+  filter: blur(100px);
+  animation: moveWavesInverse 90s infinite alternate-reverse ease-in-out;
 }
