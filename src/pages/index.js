@@ -176,8 +176,11 @@ export default function AmbienceApp() {
   };
 
   const handleVolumeChange = (sound, volume) => {
-    setVolumes({ ...volumes, [sound.name]: volume });
-    sound.howl.volume(volume);
+    sound = selectedSounds.filter((s) => s.name === sound.name)[0];
+    if (sound) {
+      setVolumes({ ...volumes, [sound.name]: volume });
+      sound.howl.volume(volume);
+    }
   };
 
   const handleBackgroundChange = (bg) => {
@@ -283,31 +286,36 @@ export default function AmbienceApp() {
           <div className="mt-10">
             {Object.entries(soundCategories).map(([category, sounds]) => (
               <div key={category} className="mb-8">
-                <h2 className="text-2xl font-semibold mb-4">{category}</h2>
+                <h2 className="text-xl font-semibold mb-4">{category}</h2>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                   {sounds.map((sound) => (
-                    <Card
-                      key={sound.name}
-                      className={`bg-gray-900 backdrop-blur-md bg-opacity-50 rounded-lg md:rounded-xl shadow-xl p-4 md:p-6 flex flex-col items-center transition-transform transform hover:scale-105 ${selectedSounds.find((s) => s.name === sound.name)
-                        ? "border-2 border-blue-500"
-                        : "border border-transparent"
-                        }`}
-                    >
-                      <div
-                        className="text-2xl md:text-3xl mb-2 text-center cursor-pointer"
+                    <div className="flex flex-col">
+                      <Card
+                        key={sound.name}
                         onClick={() => handleToggleSound(sound)}
+                        className={`bg-gray-900 backdrop-blur-md cursor-pointer bg-opacity-50 rounded-lg md:rounded-xl shadow-xl p-4 md:p-6 flex flex-col items-center transition-transform transform hover:scale-105 ${selectedSounds.find((s) => s.name === sound.name)
+                          ? "border-2 border-blue-500"
+                          : "border border-transparent"
+                          }`}
                       >
-                        {sound.icon}
+                        <div
+                          className="text-2xl md:text-3xl mb-2 text-center"
+                        >
+                          {sound.icon}
+                        </div>
+                        <h3 className="text-sm md:text-base font-medium text-center mb-4 select-none pb-4 md:pb-2">{sound.name}</h3>
+
+                      </Card>
+                      <div className="relative bottom-9 px-8">
+                        <Slider
+                          defaultValue={(volumes[sound.name] || 0.5) * 100}
+                          min={0}
+                          max={100}
+                          step={1}
+                          onValueChange={(value) => handleVolumeChange(sound, value / 100)}
+                        />
                       </div>
-                      <h3 className="text-sm md:text-base font-medium text-center mb-4">{sound.name}</h3>
-                      <Slider
-                        defaultValue={(volumes[sound.name] || 0.5) * 100}
-                        min={0}
-                        max={100}
-                        step={1}
-                        onValueChange={(value) => handleVolumeChange(selectedSounds.filter((s) => s.name === sound.name)[0], value / 100)}
-                      />
-                    </Card>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -318,7 +326,7 @@ export default function AmbienceApp() {
 
       {activeTab === "Pomodoro" && (
         <div className={`h-screen pb-28 overscroll-none w-full flex flex-col items-center text-white px-6 md:px-12 ${mode ? mode + "-waves" : ""} transition-all justify-center duration-700 ease-in-out z-10`}>
-          <div className="text-9xl lg:text-[10rem] mb-4 font-bold">{Math.floor(time / 60) < 10 ? `0${Math.floor(time / 60)}` : Math.floor(time / 60)}:{(time % 60).toString().padStart(2, "0")}</div>
+          <div className="text-8xl md:text-9xl lg:text-[10rem] mb-4 font-bold">{Math.floor(time / 60) < 10 ? `0${Math.floor(time / 60)}` : Math.floor(time / 60)}:{(time % 60).toString().padStart(2, "0")}</div>
           <div className="mt-4 flex p-2 rounded-lg">
             <Button className="bg-slate-200 text-xs md:text-sm bg-opacity-20 backdrop-blur-md text-slate-200 border-transparent border-4 border-opacity-20 px-2 py-1 md:px-4 md:py-2 rounded-l-lg rounded-r-none" onClick={() => startTimer(25, "focus")}>Focus</Button>
             <Button className="bg-slate-200 text-xs md:text-sm bg-opacity-20 backdrop-blur-md text-slate-200 border-transparent border-4 border-opacity-20 px-2 py-1 md:px-4 md:py-2 rounded-none" onClick={() => startTimer(5, "short-break")}>Short Break</Button>
