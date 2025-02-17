@@ -273,7 +273,7 @@ export default function AmbienceApp() {
             {backgrounds.map((bg) => (
               <button
                 key={bg.name}
-                className={`px-2 py-1 md:px-4 md:py-2 text-xs md:text-base ${backgrounds.indexOf(bg) == 0 ? "rounded-l-lg" : backgrounds.indexOf(bg) == backgrounds.length - 1 ? "rounded-r-lg" : "rounded-none"} shadow-xl font-medium ${background.name === bg.name
+                className={`px-2 py-1 m-0.5 md:px-4 md:py-2 text-xs md:text-base ${backgrounds.indexOf(bg) == 0 ? "rounded-l-lg" : backgrounds.indexOf(bg) == backgrounds.length - 1 ? "rounded-r-lg" : "rounded-none"} shadow-xl font-medium ${background.name === bg.name
                   ? "bg-blue-600 text-white"
                   : "bg-gray-800 text-gray-300"
                   }`}
@@ -327,12 +327,12 @@ export default function AmbienceApp() {
       {activeTab === "Pomodoro" && (
         <div className={`h-screen pb-28 overscroll-none w-full flex flex-col items-center text-white px-6 md:px-12 ${mode ? mode + "-waves" : ""} transition-all justify-center duration-700 ease-in-out z-10`}>
           <div className="text-8xl md:text-9xl lg:text-[10rem] mb-4 font-bold">{Math.floor(time / 60) < 10 ? `0${Math.floor(time / 60)}` : Math.floor(time / 60)}:{(time % 60).toString().padStart(2, "0")}</div>
-          <div className="mt-4 flex p-2 rounded-lg">
-            <Button className="bg-slate-200 text-xs md:text-sm bg-opacity-20 backdrop-blur-md text-slate-200 border-transparent border-4 border-opacity-20 px-2 py-1 md:px-4 md:py-2 rounded-l-lg rounded-r-none" onClick={() => startTimer(25, "focus")}>Focus</Button>
-            <Button className="bg-slate-200 text-xs md:text-sm bg-opacity-20 backdrop-blur-md text-slate-200 border-transparent border-4 border-opacity-20 px-2 py-1 md:px-4 md:py-2 rounded-none" onClick={() => startTimer(5, "short-break")}>Short Break</Button>
-            <Button className="bg-slate-200 text-xs md:text-sm bg-opacity-20 backdrop-blur-md text-slate-200 border-transparent border-4 border-opacity-20 px-2 py-1 md:px-4 md:py-2 rounded-none" onClick={() => startTimer(15, "long-break")}>Long Break</Button>
-            <Button className="bg-slate-200 text-xs md:text-sm bg-opacity-20 backdrop-blur-md text-slate-200 border-transparent border-4 border-opacity-20 px-2 py-1 md:px-4 md:py-2 rounded-none" onClick={() => { setIsRunning(false); setTime(25 * 60); setMode(null); }}>Reset</Button>
-            <Button className={`bg-slate-200 text-xs md:text-sm bg-opacity-20 backdrop-blur-md text-slate-200 border-transparent border-4 border-opacity-20 px-2 py-1 md:px-4 md:py-2 rounded-l-none rounded-r-lg`} onClick={() => setIsRunning(!isRunning)}>{isRunning ? "Pause" : "Start"}</Button>
+          <div className="mt-4 flex p-1 md:p-2 rounded-lg">
+            <Button key={"focus"} className="bg-slate-200 text-xs md:text-sm bg-opacity-20 backdrop-blur-md text-slate-200 border-transparent border-4 border-opacity-20 px-2 py-1 rounded-l-lg rounded-r-none" onClick={() => startTimer(25, "focus")}>Focus</Button>
+            <Button key={"short-break"} className="bg-slate-200 text-xs md:text-sm bg-opacity-20 backdrop-blur-md text-slate-200 border-transparent border-4 border-opacity-20 px-2 py-1 rounded-none" onClick={() => startTimer(5, "short-break")}>Short Break</Button>
+            <Button key={"long-break"} className="bg-slate-200 text-xs md:text-sm bg-opacity-20 backdrop-blur-md text-slate-200 border-transparent border-4 border-opacity-20 px-2 py-1 rounded-none" onClick={() => startTimer(15, "long-break")}>Long Break</Button>
+            <Button key={"reset"} className="bg-slate-200 text-xs md:text-sm bg-opacity-20 backdrop-blur-md text-slate-200 border-transparent border-4 border-opacity-20 px-2 py-1 rounded-none" onClick={() => { setIsRunning(false); setTime(25 * 60); setMode(null); }}>Reset</Button>
+            <Button key={"pause"} className={`bg-slate-200 text-xs md:text-sm bg-opacity-20 backdrop-blur-md text-slate-200 border-transparent border-4 border-opacity-20 px-2 py-1 rounded-l-none rounded-r-lg`} onClick={() => setIsRunning(!isRunning)}>{isRunning ? "Pause" : "Start"}</Button>
           </div>
 
         </div>
