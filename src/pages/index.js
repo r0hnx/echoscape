@@ -24,6 +24,7 @@ const soundCategories = {
     { name: "Bustling Cafe", url: "/sounds/cafe.mp3", icon: "☕" },
     { name: "Fireplace", url: "/sounds/fireplace.mp3", icon: "🔥" },
     { name: "Nature", url: "/sounds/nature.mp3", icon: "🍀" },
+    { name: "Restaurant", url: "/sounds/restaurant.mp3", icon: "🍽️" },
   ]
 };
 
